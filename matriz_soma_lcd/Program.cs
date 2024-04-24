@@ -35,16 +35,13 @@ for (int c = 0; c < tamanho; c++)
 }
 
 Console.WriteLine("\n\nSOMA DE DIAGONAIS:");
+int aux_c = tamanho - 1;
 for (int l = 0; l < tamanho; l++)
 {
     diagonal1 += matriz[l, l];
+    diagonal2 += matriz[l, aux_c];
+    aux_c--;
 }
 
-int aux_l = 0;
-for (int c = tamanho - 1; c >= 0; c--)
-{
-    diagonal2 += matriz[aux_l, c];
-    aux_l++;
-}
 Console.WriteLine("Diagonal 1 = " + diagonal1);
 Console.WriteLine("Diagonal 2 = " + diagonal2);
