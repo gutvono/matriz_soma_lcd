@@ -2,7 +2,7 @@
 int[,] matriz = new int[tamanho, tamanho];
 int[] soma_linhas = new int[tamanho];
 int[] soma_colunas = new int[tamanho];
-int diagonal1 = 0, diagonal2 = 0, i_decrescente = tamanho;
+int diagonal1 = 0, diagonal2 = 0;
 
 for (int l = 0; l < tamanho; l++)
 {
