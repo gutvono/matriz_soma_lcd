@@ -1,47 +1,99 @@
-﻿int tamanho = 3;
-int[,] matriz = new int[tamanho, tamanho];
-int[] soma_linhas = new int[tamanho];
-int[] soma_colunas = new int[tamanho];
-int diagonal1 = 0, diagonal2 = 0;
+﻿int tamanhoMatriz = 0, oQueSomar, reiniciar = 0, valorMinimo = 0, valorMaximo = 0;
+int[,] matriz;
+int[] vetorResultado;
+int diagonalResultado = 0;
 
-for (int l = 0; l < tamanho; l++)
+void menu()
 {
+    Console.Write("Qual será o tamanho da matriz? ");
+    tamanhoMatriz = int.Parse(Console.ReadLine());
     Console.WriteLine();
-    for (int c = 0; c < tamanho; c++)
+
+    Console.WriteLine("Qual o valor MÍNIMO a ser utilizado na matriz?");
+    valorMinimo = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Qual o valor MÁXIMO a ser utilizado na matriz?");
+    valorMaximo = int.Parse(Console.ReadLine());
+    
+    do
     {
-        matriz[l, c] = new Random().Next(1, 10);
-        Console.Write($"{matriz[l, c]} ");
-    }
+        Console.WriteLine("Você deseja realizar a soma das linhas, colunas, diagonal1 ou diagonal2?");
+        Console.WriteLine("1 - LINHAS");
+        Console.WriteLine("2 - COLUNAS");
+        Console.WriteLine("3 - DIAGONAL 1");
+        Console.WriteLine("4 - DIAGONAL 2");
+        oQueSomar = int.Parse(Console.ReadLine());
+
+        if (oQueSomar < 1 || oQueSomar > 4) Console.WriteLine("\n\nERRO: Informe um valor correto!");
+    } while (oQueSomar <= 0 || oQueSomar > 4);
 }
 
-Console.WriteLine("\n\nSOMA DE LINHAS:");
-for (int l = 0; l < tamanho; l++)
+//CRIAR MATRIZ E VETORES DE RESULTADO
+void criarMatrizVetor(int tamanho)
 {
-    for (int c = 0; c < tamanho; c++)
-    {
-        soma_linhas[l] += matriz[l, c];
-    }
-    Console.Write($"{soma_linhas[l]} ");
+    matriz = new int[tamanho, tamanho];
+    vetorResultado = new int[tamanho];
 }
 
-Console.WriteLine("\n\nSOMA DE COLUNAS:");
-for (int c = 0; c < tamanho; c++)
+//POPULAR MATRIZ
+void popularMatriz(int tamanho, int min, int max)
 {
+    Console.WriteLine("\nMatriz ORIGINAL:");
     for (int l = 0; l < tamanho; l++)
     {
-        soma_colunas[c] += matriz[l, c];
-    }
-    Console.Write($"{soma_colunas[c]} ");
+        if (l > 0) Console.WriteLine();
+        for (int c = 0; c < tamanho; c++)
+        {
+            matriz[l, c] = new Random().Next(min, max + 1);
+            Console.Write(matriz[l, c] + " ");
+        }
+    };
 }
 
-Console.WriteLine("\n\nSOMA DE DIAGONAIS:");
-int aux_c = tamanho - 1;
-for (int l = 0; l < tamanho; l++)
+//PASSAR A VARIAVEL oQueSomar COMO PARAMETRO
+void somar(int referencia)
 {
-    diagonal1 += matriz[l, l];
-    diagonal2 += matriz[l, aux_c];
-    aux_c--;
+    Console.WriteLine("\n\nRESULTADO: ");
+    if (referencia < 3)
+    {
+        for (int r = 0; r < tamanhoMatriz; r++)
+        {
+            for (int c = 0; c < tamanhoMatriz; c++)
+            {
+                vetorResultado[r] += referencia == 1 ? matriz[r, c] : matriz[c, r];
+            }
+            Console.Write($"{vetorResultado[r]} ");
+        }
+    }
+    else
+    {
+        int aux_c = tamanhoMatriz - 1;
+        for (int l = 0; l < tamanhoMatriz; l++)
+        {
+            diagonalResultado += referencia == 3 ? matriz[l, l] : matriz[l, aux_c];
+            aux_c--;
+        }
+
+        Console.WriteLine(diagonalResultado);
+    }
 }
 
-Console.WriteLine("Diagonal 1 = " + diagonal1);
-Console.WriteLine("Diagonal 2 = " + diagonal2);
+//INICIO DO PROGRAMA
+do
+{
+    menu();
+
+    //CRIA A MATRIZ E VETOR DE RESULTADO
+    criarMatrizVetor(tamanhoMatriz);
+
+    //POPULA A MATRIZ
+    popularMatriz(tamanhoMatriz, valorMinimo, valorMaximo);
+
+    //FAZENDO O CALCULO
+    somar(oQueSomar);
+
+    Console.WriteLine("\n\nReiniciar o programa?");
+    Console.WriteLine("1 - SIM");
+    Console.WriteLine("2 - NÃO");
+    reiniciar = int.Parse(Console.ReadLine());
+} while (reiniciar == 1);
