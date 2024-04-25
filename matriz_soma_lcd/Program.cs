@@ -28,7 +28,7 @@ void menu()
     } while (oQueSomar <= 0 || oQueSomar > 4);
 }
 
-//CRIAR MATRIZ E VETORES DE RESULTADO
+//CRIAR MATRIZ E VETOR DE RESULTADO
 void criarMatrizVetor(int tamanho)
 {
     matriz = new int[tamanho, tamanho];
@@ -82,14 +82,8 @@ void somar(int referencia)
 do
 {
     menu();
-
-    //CRIA A MATRIZ E VETOR DE RESULTADO
     criarMatrizVetor(tamanhoMatriz);
-
-    //POPULA A MATRIZ
     popularMatriz(tamanhoMatriz, valorMinimo, valorMaximo);
-
-    //FAZENDO O CALCULO
     somar(oQueSomar);
 
     Console.WriteLine("\n\nReiniciar o programa?");
